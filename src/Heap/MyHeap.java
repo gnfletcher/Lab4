@@ -1,3 +1,4 @@
+package Heap;
 public interface MyHeap {
     public Node makeHeap(Comparable value);
     public boolean isEmpty();
