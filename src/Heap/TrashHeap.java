@@ -68,13 +68,18 @@ public class TrashHeap implements MyHeap{
   public boolean insert(Comparable value) {
     if(root == null){
       Node newNode = new Node(value);
+      root = newNode;
+      return true;
     } else {
-      if(nextOpen().getLeftChild() != null){
-        nextOpen().setRightChild(new Node(value));
+      Node parent = nextOpen();
+      Node child = new Node(value);
+      if(parent.getLeftChild() != null){
+        parent.setRightChild(child);
       } else {
-        nextOpen().setLeftChild(new Node(value));
+        nextOpen().setLeftChild(child);
       }
       
+      return true;
     }
     return false;
   }
