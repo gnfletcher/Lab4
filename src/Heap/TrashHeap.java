@@ -51,9 +51,8 @@ public class TrashHeap implements MyHeap{
    String path = Integer.toBinaryString(numberOfNodes+1);
    path = path.substring(1, path.length()-1);
    Node current = root;
-   char[] pathArray = path.toCharArray();
-   for(int i = pathArray.length; i >= 0; i--){
-    if(pathArray[i] == 1){
+   for(int i = path.length()-1; i >= 0; i--){
+    if(path.charAt(i) == 1){
       current = current.getRightChild();
     } else {
       current = current.getLeftChild();
@@ -69,7 +68,14 @@ public class TrashHeap implements MyHeap{
   public boolean insert(Comparable value) {
     if(root == null){
       Node newNode = new Node(value);
-    } else if ()
+    } else {
+      if(nextOpen().getLeftChild() != null){
+        nextOpen().setRightChild(new Node(value));
+      } else {
+        nextOpen().setLeftChild(new Node(value));
+      }
+      
+    }
     return false;
   }
 
