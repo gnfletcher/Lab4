@@ -3,7 +3,6 @@
  */
 package Heap;
 
-import java.util.Stack;
 
 /**
  * @author FletcherG
@@ -69,19 +68,21 @@ public class TrashHeap implements MyHeap{
     if(root == null){
       Node newNode = new Node(value);
       root = newNode;
+      numberOfNodes++;
       return true;
     } else {
       Node parent = nextOpen();
       Node child = new Node(value);
       if(parent.getLeftChild() != null){
         parent.setRightChild(child);
+        numberOfNodes++;
+        return true;
       } else {
         nextOpen().setLeftChild(child);
+        numberOfNodes++;
+        return true;
       }
-      
-      return true;
     }
-    return false;
   }
 
   /* (non-Javadoc)
