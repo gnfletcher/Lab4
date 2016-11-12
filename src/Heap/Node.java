@@ -58,4 +58,11 @@ public class Node {
 	public void setParent(Node parent) {
 		this.parent = parent;
 	}
+	
+	public boolean hasChildren(){
+		if(left_child != null || right_child != null){
+			return true;
+		}
+		return false;
+	}
 }

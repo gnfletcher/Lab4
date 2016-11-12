@@ -12,13 +12,11 @@ public class TrashHeap implements MyHeap {
 	public Node root;
 	public int height;
 	public int numberOfNodes;
-	public Node nextParent;
 	public Node last;
 
 	public TrashHeap() {
 		this.root = null;
 		this.height = -1;
-		this.nextParent = null;
 	}
 
 	/*
@@ -45,10 +43,6 @@ public class TrashHeap implements MyHeap {
 			return true;
 		}
 		return false;
-	}
-
-	public boolean levelFull() {
-		return numberOfNodes == Math.pow(2, height);
 	}
 
 	public Node nextOpen() {
@@ -223,8 +217,11 @@ public class TrashHeap implements MyHeap {
 	@Override
 	public boolean union(MyHeap heap) {
 		// TODO Auto-generated method stub
-		
-		return false;
+		while(!heap.isEmpty()){
+			insert(heap.findMin());
+			heap.deleteMin();
+		}
+		return true;
 	}
 
 	/*
