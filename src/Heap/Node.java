@@ -4,6 +4,7 @@ public class Node {
 	private Node right_child;
 	private Node parent;
 	private Comparable data;
+	private int balancingFactor;
 	
 	
 	public Node(){
@@ -11,6 +12,7 @@ public class Node {
 		right_child = null;
 		data = null;
 		parent = null;
+		balancingFactor = 0;
 	}
 
 	public Node(Comparable data) {
@@ -18,6 +20,7 @@ public class Node {
 		left_child = null;
 		right_child = null;
 		parent = null;
+		balancingFactor = 0;
 	}
 	
 	public Node(Comparable data, Node left_child, Node right_child, Node parent) {
@@ -25,6 +28,7 @@ public class Node {
 		this.left_child = left_child;
 		this.right_child = right_child;
 		this.parent = parent;
+		balancingFactor = 0;
 	}
 	
 	public Node getLeftChild() {
@@ -64,5 +68,13 @@ public class Node {
 			return true;
 		}
 		return false;
+	}
+	
+	public void setBalancingFactor(int factor){
+	  this.balancingFactor = factor;
+	}
+	
+	public int getBalancingFactor(){
+	  return this.balancingFactor;
 	}
 }

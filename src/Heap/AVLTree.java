@@ -39,7 +39,7 @@ public class AVLTree {
 		return false;
 	}
 
-	public boolean balance() {
+	public boolean balance(Node node) {
 		
 		return true;
 	}
@@ -88,7 +88,7 @@ public class AVLTree {
 		} else {
 			insert.setLeftChild(node);
 		}
-		balance();
+		balance(Node node);
 		return true;
 	}
 
@@ -117,7 +117,7 @@ public class AVLTree {
 		} else {
 			node.getParent().setLeftChild(replacement);
 		}
-		balance();
+		balance(Node node);
 		return true;
 	}
 
