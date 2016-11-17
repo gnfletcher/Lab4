@@ -7,24 +7,32 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * @author FletcherG
- *
+ * Implements the MyHeap interface to create a heap
+ * 
+ * @author Greg Fletcher
+ * @author Sean O'Donnell
  */
 public class TrashHeap implements MyHeap {
 
 	public Node root;
 	public int numberOfNodes;
 	public Node last;
-
+	
+	/**
+	 * Default constructor that creates an empty heap
+	 */
 	public TrashHeap() {
 		this.root = null;
 		this.numberOfNodes = 0;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Creates a heap with the root being the given value
+	 * updates the root and the last node to the new node
+	 * increments the number of nodes by 1
 	 * 
-	 * @see Heap.MyHeap#makeHeap(java.lang.Comparable)
+	 * @param Comprabale value to become the root
+	 * @return Node the root node
 	 */
 	@Override
 	public Node makeHeap(Comparable value) {
@@ -35,16 +43,22 @@ public class TrashHeap implements MyHeap {
 		return newNode;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Checks to see if the tree is empty by checking the number of nodes
 	 * 
-	 * @see Heap.MyHeap#isEmpty()
+	 * 
+	 * @return boolean whether or not tree is empty
 	 */
 	@Override
 	public boolean isEmpty() {
 		return numberOfNodes == 0;
 	}
 
+	/**
+	 * Returns the parent of the next open space in the heap
+	 * 
+	 * @return Node parent of next open spot
+	 */
 	public Node nextOpen() {
 		String path = Integer.toBinaryString(numberOfNodes + 1);
 		Node current = root;
@@ -58,6 +72,10 @@ public class TrashHeap implements MyHeap {
 		return current;
 	}
 
+	/**
+	 * Updates the last value in the heap after a deletion has occurred
+	 * 
+	 */
 	public void newLast() {
 		String path = Integer.toBinaryString(numberOfNodes);
 		Node current = root;
@@ -71,10 +89,11 @@ public class TrashHeap implements MyHeap {
 		last = current;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Inserts a new node into the heap with the given value
 	 * 
-	 * @see Heap.MyHeap#insert(java.lang.Comparable)
+	 * @param Comparable value to be inserted into heap
+	 * @return boolean if operation was successful.
 	 */
 	@Override
 	public boolean insert(Comparable value) {
@@ -102,6 +121,12 @@ public class TrashHeap implements MyHeap {
 		}
 	}
 
+	/**
+	 * Swaps the given node with its parent
+	 * 
+	 * @param Node to be swapped
+	 * @return Node that was swapped
+	 */
 	public Node swapUp(Node node) {
 		Node current = node;
 		Comparable parentValue = current.getParent().getData();
@@ -110,6 +135,12 @@ public class TrashHeap implements MyHeap {
 		return current.getParent();
 	}
 
+	/**
+	 * Swaps the given node with its child
+	 * 
+	 * @param Node to be swapped
+	 * @return Node that was swapped
+	 */
 	public Node swapDown(Node node) {
 		Node current = node;
 		Comparable parentValue = current.getParent().getData();
@@ -118,6 +149,14 @@ public class TrashHeap implements MyHeap {
 		return current;
 	}
 
+	/**
+	 * Checks to see if the given node's value is greater than its parent's values.
+	 * If it is not, it is swapped with its parent and the process is repeated
+	 * If it is, do nothing
+	 * 
+	 * @param Node from which to sift up
+	 * @return boolean if the operation was successful
+	 */
 	public boolean siftUp(Node node) {
 		Node current = node;
 		while (!current.equals(root)) {
@@ -129,6 +168,14 @@ public class TrashHeap implements MyHeap {
 		return true;
 	}
 
+	/**
+	 * Checks to see if the given node's value is less than its children's values.
+	 * If it is not, it is swapped with its lesser child and the process is repeated
+	 * If it is, do nothing
+	 * 
+	 * @param Node from which to sift down
+	 * @return boolean if the operation was successful
+	 */
 	public boolean siftDown(Node node) {
 		Node current = node;
 		while (hasChildren(current)) {
@@ -153,6 +200,12 @@ public class TrashHeap implements MyHeap {
 		return false;
 	}
 
+	/**
+	 * Checks if a node has any children by checking to see if its left child is null
+	 * 
+	 * @param Node to be checked for children
+	 * @return boolean whether or not the node has children
+	 */
 	public boolean hasChildren(Node node) {
 		if (node.getLeftChild() != null) {
 			return true;
@@ -160,10 +213,11 @@ public class TrashHeap implements MyHeap {
 		return false;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Deletes the minimum value in the heap by swapping the root with the last
+	 * node, deleting the last node, then sifting down from the root
 	 * 
-	 * @see Heap.MyHeap#deleteMin()
+	 * @return boolean whether or not the minimum was deleted
 	 */
 	@Override
 	public boolean deleteMin() {
@@ -184,10 +238,16 @@ public class TrashHeap implements MyHeap {
 		return true;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Compares the given value to the value in the given Node, if the given
+	 * value is less than the given node's value, the node's value becomes the
+	 * given value
 	 * 
-	 * @see Heap.MyHeap#decreaseKey(Heap.Node, java.lang.Comparable)
+	 * @param node
+	 *            whose value is to be compared to the given value
+	 * @param Comparable
+	 *            value to be compared to the given node's value
+	 * @return boolean whether or not given node's value was updated
 	 */
 	@Override
 	public boolean decreaseKey(Node key, Comparable updateValue) {
@@ -198,10 +258,13 @@ public class TrashHeap implements MyHeap {
 		return false;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Deletes a node by swapping it with the last node then deleting the last
+	 * node
 	 * 
-	 * @see Heap.MyHeap#delete(Heap.Node)
+	 * @param Node
+	 *            to be deleted
+	 * @return boolean if Node was deleted
 	 */
 	@Override
 	public boolean delete(Node del) {
@@ -218,13 +281,14 @@ public class TrashHeap implements MyHeap {
 		return true;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Takes a given heap and merges its elements with this heap
 	 * 
-	 * @see Heap.MyHeap#union(Heap.MyHeap)
+	 * @param Heap
+	 *            to be merged with this heap
+	 * @return boolean if the union was successful.
 	 */
 	public boolean union(MyHeap heap) {
-		// TODO Auto-generated method stub
 		while (!heap.isEmpty()) {
 			insert(heap.findMin());
 			heap.deleteMin();
@@ -232,10 +296,10 @@ public class TrashHeap implements MyHeap {
 		return true;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Finds and returns the minimum value in the heap
 	 * 
-	 * @see Heap.MyHeap#findMin()
+	 * @return Comparable minimum value in heap
 	 */
 	@Override
 	public Comparable findMin() {
@@ -246,6 +310,10 @@ public class TrashHeap implements MyHeap {
 		return null;
 	}
 
+	/**
+	 * Prints all of the nodes in the heap
+	 * 
+	 */
 	public void print() {
 		Queue<Node> queue = new LinkedList<Node>();
 		if (root == null)
