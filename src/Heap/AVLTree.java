@@ -97,7 +97,7 @@ public class AVLTree {
       insert.setLeftChild(newNode);
       newNode.setParent(insert);
     }
-    balance();
+    balance(root);
     return true;
   }
 
@@ -122,7 +122,7 @@ public class AVLTree {
       } else {
         node.getParent().setLeftChild(null);
       }
-      balance();
+      balance(root);
       return true;
     }
     Node replacement = node.getLeftChild();
@@ -136,23 +136,23 @@ public class AVLTree {
     } else {
       node.getParent().setLeftChild(replacement);
     }
-    balance();
+    balance(root);
     return true;
   }
 
   public static ArrayList<Comparable> inorder(AVLTree tree, Node node) {
-    return tree.inorderTraversal(node);
+    return tree.inorder(node);
   }
 
-  public ArrayList<Comparable> inorderTraversal(Node node) {
+  public ArrayList<Comparable> inorder(Node node) {
     ArrayList<Comparable> list = new ArrayList<>();
     if (node.hasChildren()) {
       if (node.getLeftChild() != null) {
-        list.addAll(inorderTraversal(node.getLeftChild()));
+        list.addAll(inorder(node.getLeftChild()));
       }
       list.add(node.getData());
       if (node.getRightChild() != null) {
-        list.addAll(inorderTraversal(node.getRightChild()));
+        list.addAll(inorder(node.getRightChild()));
       }
     } else {
       list.add(node.getData());
@@ -160,18 +160,12 @@ public class AVLTree {
     return list;
   }
 
-
-  public boolean balance() {
-    int balance = balanceTree(root);
-    return (balance == 0 || balance == -1 || balance == 1);
-  }
-
-  public int balanceTree(Node node) {
+  public int balance(Node node) {
     node.setBalancingFactor(0);
     if (node.hasChildren()) {
       if (node.getLeftChild() != null) {
         node.setBalancingFactor(node.getBalancingFactor()
-            + (Math.abs(balanceTree(node.getLeftChild())) * -1) - 1);
+            + (Math.abs(balance(node.getLeftChild())) * -1) - 1);
         if (node.getBalancingFactor() < -1) {
           if(node.getLeftChild().getBalancingFactor() == -1){
             rotateRight(node);
@@ -182,7 +176,7 @@ public class AVLTree {
       }
       if (node.getRightChild() != null) {
         node.setBalancingFactor(
-            node.getBalancingFactor() + (Math.abs(balanceTree(node.getRightChild()))) + 1);
+            node.getBalancingFactor() + (Math.abs(balance(node.getRightChild()))) + 1);
         if (node.getBalancingFactor() > 1) {
           if(node.getLeftChild().getBalancingFactor() == 1){
             rotateLeft(node);
@@ -246,11 +240,14 @@ public class AVLTree {
   }
 
   public void inOrderPrint() {
-    ArrayList<Comparable> inorder = inorderTraversal(root);
+    ArrayList<Comparable> inorder = inorder(root);
     for (Comparable value : inorder) {
       System.out.print(value + ", ");
     }
     System.out.println("");
   }
 
+  public Node getRoot(){
+    return root;
+  }
 }

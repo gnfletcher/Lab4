@@ -61,6 +61,7 @@ public class driver {
       AVLTree tree = new AVLTree(45);
       tree.insert(12);
       tree.insert(50);
+      System.out.println(tree.getRoot().getData() + ", " + tree.getRoot().getLeftChild().getData() + ", " + tree.getRoot().getRightChild().getData());
       tree.insert(10);
       tree.insert(15);
       tree.insert(47);
