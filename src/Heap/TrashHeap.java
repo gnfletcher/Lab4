@@ -51,9 +51,6 @@ public class TrashHeap implements MyHeap {
 	}
 
 	public Node nextOpen() {
-		//if (numberOfNodes == 1 || numberOfNodes == 2) {
-		//	return root;
-		//}
 		String path = Integer.toBinaryString(numberOfNodes + 1);
 		Node current = root;
 		for (int i = 1; i < path.length() - 1; i++) {
@@ -63,22 +60,22 @@ public class TrashHeap implements MyHeap {
 				current = current.getRightChild();
 			}
 		}
-
 		return current;
 	}
 
 	public void newLast() {
-		String path = Integer.toBinaryString(numberOfNodes - 1);
-		path = path.substring(1, path.length());
+		String path = Integer.toBinaryString(numberOfNodes);
 		Node current = root;
-		for (int i = path.length() - 1; i >= 0; i--) {
-			if (path.charAt(i) == 1) {
-				current = current.getRightChild();
-			} else {
+		for (int i = 1; i < path.length(); i++) {
+			if (Character.compare(path.charAt(i), '0') == 0) {
 				current = current.getLeftChild();
+			} else {
+				current = current.getRightChild();
 			}
 		}
+		System.out.println(last.getData());
 		last = current;
+		System.out.println(last.getData());
 	}
 
 	/*
@@ -100,10 +97,12 @@ public class TrashHeap implements MyHeap {
 			last = child;
 			if (parent.getLeftChild() == null) {
 				parent.setLeftChild(child);
+				child.setParent(parent);
 				numberOfNodes++;
 				return siftUp(child);
 			} else {
 				parent.setRightChild(child);
+				child.setParent(parent);
 				numberOfNodes++;
 				return siftUp(child);
 			}
@@ -128,10 +127,11 @@ public class TrashHeap implements MyHeap {
 
 	public boolean siftUp(Node node) {
 		Node current = node;
-		while (current.equals(root)) {
-			while (current.getParent().getData().compareTo(current.getData()) < 0) {
+		while (!current.equals(root)) {
+			while (current.getParent().getData().compareTo(current.getData()) > 0) {
 				swapUp(current);
 			}
+			current = current.getParent();
 		}
 		return true;
 	}
@@ -219,7 +219,8 @@ public class TrashHeap implements MyHeap {
 		siftDown(del);
 		return true;
 	}
-
+	
+	
 	/*
 	 * (non-Javadoc)
 	 * 

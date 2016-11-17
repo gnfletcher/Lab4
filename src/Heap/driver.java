@@ -16,10 +16,10 @@ public class driver {
     // TODO Auto-generated method stub
       TrashHeap heap = new TrashHeap();
       heap.makeHeap(5);
-      heap.insert(8);
+      heap.insert (50);
       heap.insert(14);
       heap.insert(15);
-      heap.insert(16);
+      heap.insert(8);
       heap.insert(20);
       heap.insert(40);
       heap.insert(42);
@@ -32,6 +32,12 @@ public class driver {
       heap.insert(38);
       heap.insert(39);
       heap.insert(130);
+      heap.print();
+      heap.deleteMin();
+      heap.print();
+      heap.deleteMin();
+      heap.print();
+      heap.delete(heap.nextOpen());
       heap.print();
       
   }
