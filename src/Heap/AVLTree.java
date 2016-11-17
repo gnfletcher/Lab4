@@ -8,19 +8,15 @@ public class AVLTree {
 
 	public Node root;
 	public Node last;
-	public int balance;
 
 	public AVLTree() {
 		this.root = null;
 		this.last = null;
-		this.balance = 0;
-
 	}
 
 	public AVLTree(Comparable value) {
 		this.root = new Node(value);
 		this.last = root;
-		this.balance = 0;
 	}
 
 	public boolean search(Comparable value) {
