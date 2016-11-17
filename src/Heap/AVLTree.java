@@ -128,9 +128,6 @@ public class AVLTree {
 
   public static AVLTree delete(AVLTree tree, Comparable value) {
     Node node = tree.getNode(value);
-    System.out.println(node.getParent().getData());
-    System.out.println(node.getParent().getLeftChild().getData());
-    System.out.println(node.getParent().getRightChild().getData());
     if (!node.hasChildren()) {
       if (node.getParent().getLeftChild().equals(node)) {
         node.getParent().setLeftChild(null);
@@ -163,7 +160,6 @@ public class AVLTree {
       balance(tree.root);
       return tree;
     }
-
   }
 
   public static ArrayList<Comparable> inorder(AVLTree tree) {
