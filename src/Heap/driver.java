@@ -59,29 +59,30 @@ public class driver {
       */
       
       AVLTree tree = new AVLTree(45);
-      tree.insert(12);
-      tree.insert(50);
-      tree.insert(10);
-      tree.insert(15);
-      tree.insert(47);
-      tree.insert(52);
+      AVLTree.insert(tree, 12);
+      AVLTree.insert(tree, 50);
+      AVLTree.insert(tree, 10);
+      AVLTree.insert(tree, 15);
+      AVLTree.insert(tree, 47);
+      AVLTree.insert(tree, 52);
       tree.print();
       tree.inOrderPrint();
-      tree.insert(54);
-      tree.insert(59);
+      AVLTree.insert(tree, 54);
+      AVLTree.insert(tree, 59);
       tree.print();
       tree.inOrderPrint();
-      tree.insert(8);
-      tree.insert(9);
+      AVLTree.insert(tree, 8);
+      AVLTree.insert(tree, 9);
       tree.print();
       tree.inOrderPrint();
-      System.out.println(tree.search(50));
-      System.out.println(tree.search(15));
-      System.out.println(tree.search(100));
-      tree.delete(10);
+      System.out.println(AVLTree.search(tree, 50));
+      System.out.println(AVLTree.search(tree, 15));
+      System.out.println(AVLTree.search(tree, 100));
+      AVLTree.delete(tree, 10);
       tree.print();
       tree.inOrderPrint();
       System.out.println(tree.count(11, 20));
+      System.out.println(AVLTree.inorder(tree));
   }
 
 }
