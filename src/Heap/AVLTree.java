@@ -174,17 +174,21 @@ public class AVLTree {
             + (Math.abs(balanceTree(node.getLeftChild())) * -1) - 1);
         if (node.getBalancingFactor() < -1) {
           if(node.getLeftChild().getBalancingFactor() == -1){
-            
+            rotateRight(node);
           } else {
-            
+            rotateRightLeft(node);
           }
         }
       }
       if (node.getRightChild() != null) {
         node.setBalancingFactor(
-            node.getBalancingFactor() + (Math.abs(setBalancingFactor(node.getRightChild()))) + 1);
+            node.getBalancingFactor() + (Math.abs(balanceTree(node.getRightChild()))) + 1);
         if (node.getBalancingFactor() > 1) {
-
+          if(node.getLeftChild().getBalancingFactor() == 1){
+            rotateLeft(node);
+          } else {
+            rotateLeftRight(node);
+          }
         }
       }
     }
