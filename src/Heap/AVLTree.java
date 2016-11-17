@@ -1,6 +1,8 @@
 package Heap;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class AVLTree {
 
@@ -37,6 +39,21 @@ public class AVLTree {
 			return true;
 		}
 		return false;
+	}
+	
+	public Node getNode(Comparable value) {
+		Node current = root;
+		while (current.getData().compareTo(value) != 0 && current.hasChildren()) {
+			if (current.getData().compareTo(value) < 0) {
+				current = current.getRightChild();
+			} else {
+				current = current.getLeftChild();
+			}
+		}
+		if (current.getData().compareTo(value) == 0) {
+			return current;
+		}
+		return null;
 	}
 
 	public boolean balance(Node node) {
@@ -86,8 +103,10 @@ public class AVLTree {
 		Node newNode = new Node(value);
 		if (insert.getData().compareTo(value) <= 0) {
 			insert.setRightChild(newNode);
+			newNode.setParent(insert);
 		} else {
 			insert.setLeftChild(newNode);
+			newNode.setParent(insert);
 		}
 		balance(newNode);
 		return true;
@@ -106,7 +125,17 @@ public class AVLTree {
 		return node;
 	}
 
-	public boolean delete(Node node) {
+	public boolean delete(Comparable value) {
+		Node node = getNode(value);
+		if(!node.hasChildren()){
+			if (node.getParent().getData().compareTo(value) <= 0) {
+				node.getParent().setRightChild(null);
+			} else {
+				node.getParent().setLeftChild(null);
+			}
+			balance(node);
+			return true;
+		}
 		Node replacement = node.getLeftChild();
 		while (replacement.getRightChild() != null) {
 			replacement = node.getRightChild();
@@ -172,4 +201,30 @@ public class AVLTree {
 
 		return i;
 	}
+	
+	public void print() {
+		Queue<Node> queue = new LinkedList<Node>();
+		if (root == null)
+			return;
+		queue.clear();
+		queue.add(root);
+		while (!queue.isEmpty()) {
+			Node node = queue.remove();
+			System.out.print(node.getData() + " ");
+			if (node.getLeftChild() != null)
+				queue.add(node.getLeftChild());
+			if (node.getRightChild() != null)
+				queue.add(node.getRightChild());
+		}
+		System.out.println("");
+	}
+	
+	public void inOrderPrint(){
+		ArrayList<Comparable> inorder = inorderTraversal(root);
+		for(Comparable value: inorder){
+			System.out.print(value + ", ");
+		}
+		System.out.println("");
+	}
+
 }

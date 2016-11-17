@@ -65,6 +65,15 @@ public class driver {
       tree.insert(15);
       tree.insert(47);
       tree.insert(52);
+      tree.print();
+      tree.inOrderPrint();
+      System.out.println(tree.search(50));
+      System.out.println(tree.search(15));
+      System.out.println(tree.search(100));
+      tree.delete(10);
+      tree.print();
+      tree.inOrderPrint();
+      System.out.println(tree.count(11, 20));
   }
 
 }
