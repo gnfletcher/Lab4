@@ -80,8 +80,7 @@ public class driver {
       AVLTree.delete(tree, 10);
       tree.print();
       System.out.println(AVLTree.inorder(tree));
-      AVLTree.delete(tree, 59
-          );
+      AVLTree.delete(tree, 9);
       tree.print();
       System.out.println(AVLTree.inorder(tree));
   }
