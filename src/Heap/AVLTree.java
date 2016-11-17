@@ -52,6 +52,8 @@ public class AVLTree {
   public boolean rotateLeft(Node node) {
     Node newParent = node.getRightChild();
     Node oldParent = node;
+    System.out.println(node.getData());
+    System.out.println(node.getParent().getData());
     if (node.getParent().getData().compareTo(node.getData()) <= 0) {
       node.getParent().setRightChild(newParent);
     } else {
@@ -177,12 +179,15 @@ public class AVLTree {
         } else {
           rotateRightLeft(node);
         }
-      } else if (node.getBalancingFactor() == 2)
-        if (node.getLeftChild().getBalancingFactor() == 1) {
+        node.setBalancingFactor(node.getBalancingFactor() + 1);
+      } else if (node.getBalancingFactor() == 2) {
+        if (node.getRightChild().getBalancingFactor() == 1) {
           rotateLeft(node);
         } else {
           rotateLeftRight(node);
         }
+        node.setBalancingFactor(node.getBalancingFactor() - 1);
+      }
     }
     return node.getBalancingFactor();
   }
