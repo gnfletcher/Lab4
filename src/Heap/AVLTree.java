@@ -51,7 +51,7 @@ public class AVLTree {
 
   public static boolean rotateLeft(Node node) {
     Node newParent = node.getRightChild();
-    //newParent.setParent(node.getParent());
+    newParent.setParent(node.getParent());
     Node oldParent = node;
     if (node.getParent().getLeftChild().equals(node)) {
       node.getParent().setLeftChild(newParent);
@@ -72,11 +72,12 @@ public class AVLTree {
 
   public static boolean rotateRight(Node node) {
     Node newParent = node.getLeftChild();
+    newParent.setParent(node.getParent());
     Node oldParent = node;
-    if (node.getParent().getData().compareTo(node.getData()) <= 0) {
-      node.getParent().setRightChild(newParent);
-    } else {
+    if (node.getParent().getLeftChild().equals(node)) {
       node.getParent().setLeftChild(newParent);
+    } else {
+      node.getParent().setRightChild(newParent);
     }
     oldParent.setLeftChild(newParent.getRightChild());
     oldParent.setParent(newParent);
