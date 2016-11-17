@@ -15,20 +15,20 @@ public class AVLTree {
   public Node root;
   public Node last;
 
-	/**
-	 * Default constructor that creates an empty tree
-	 */
+  /**
+   * Default constructor that creates an empty tree
+   */
   public AVLTree() {
     this.root = null;
     this.last = null;
   }
 
-	/**
-	 * Constructor to create a tree with the given value at the root
-	 * Creates a new node and sets that node to the root
-	 * 
-	 * @param Comparable value to become the root
-	 */
+  /**
+   * Constructor to create a tree with the given value at the root Creates a new node and sets that
+   * node to the root
+   * 
+   * @param Comparable value to become the root
+   */
   public AVLTree(Comparable value) {
     this.root = new Node(value);
     this.last = root;
@@ -57,8 +57,7 @@ public class AVLTree {
   }
 
   /**
-   * Returns the node containing the target value
-   * If no node has this value, null is returned
+   * Returns the node containing the target value If no node has this value, null is returned
    * 
    * @param Comparable value to be searched for
    * @return Node containg target value
@@ -204,47 +203,63 @@ public class AVLTree {
    * @param Comparable value to be deleted
    * @return AVLtree new tree with node deleted
    */
+  /*
+   * public static AVLTree delete(AVLTree tree, Comparable value) { Node node = tree.getNode(value);
+   * if (!node.hasChildren()) { if (node.getParent().getLeftChild().equals(node)) {
+   * node.getParent().setLeftChild(null); node.setParent(null); } else {
+   * node.getParent().setRightChild(null); node.setParent(null); } balance(tree.root); return tree;
+   * } else { if (node.getLeftChild() != null) { Node replacement = node.getLeftChild(); while
+   * (replacement.getRightChild() != null) { replacement = replacement.getRightChild(); }
+   * replacement.getParent().setRightChild(null); replacement.setParent(node.getParent());
+   * replacement.setLeftChild(node.getLeftChild()); if (node.getLeftChild() != null) {
+   * node.getLeftChild().setParent(replacement); } replacement.setRightChild(node.getRightChild());
+   * if (node.getRightChild() != null) { node.getRightChild().setParent(replacement); } if
+   * (node.getParent().getLeftChild().equals(node)) { node.getParent().setLeftChild(replacement); }
+   * else { node.getParent().setRightChild(replacement); } } else { Node replacement =
+   * node.getRightChild(); if (node.getParent().getLeftChild().equals(node)) {
+   * node.getParent().setLeftChild(replacement); } else {
+   * node.getParent().setRightChild(replacement); } } balance(tree.root); return tree; } }
+   */
+
   public static AVLTree delete(AVLTree tree, Comparable value) {
     Node node = tree.getNode(value);
-    if (!node.hasChildren()) {
-      if (node.getParent().getLeftChild().equals(node)) {
-        node.getParent().setLeftChild(null);
-      } else {
-        node.getParent().setRightChild(null);
-      }
-      balance(tree.root);
-      return tree;
-    } else {
+    Node successor;
+    if (node.hasChildren()) {
       if (node.getLeftChild() != null) {
-        Node replacement = node.getLeftChild();
-        while (replacement.getRightChild() != null) {
-          replacement = node.getRightChild();
-        }
-        replacement.getParent().setRightChild(null);
-        replacement.setLeftChild(node.getLeftChild());
-        if (replacement.getLeftChild() != null) {
-          replacement.getLeftChild().setParent(replacement);
-        }
-        replacement.setRightChild(node.getRightChild());
-        if (replacement.getRightChild() != null) {
-          replacement.getRightChild().setParent(replacement);
-        }
-        if (node.getParent().getLeftChild().equals(node)) {
-          node.getParent().setLeftChild(replacement);
+        successor = node.getLeftChild();
+        if (successor.getRightChild() != null) {
+          while (successor.getRightChild() != null) {
+            successor = successor.getRightChild();
+          }
+          node.setData(successor.getData());
+          successor.getParent().setRightChild(null);
+          successor.setParent(null);
         } else {
-          node.getParent().setRightChild(replacement);
+          node.setData(successor.getData());
+          node.setLeftChild(successor.getLeftChild());
+          successor.setParent(null);
         }
       } else {
-        Node replacement = node.getRightChild();
+        successor = node.getRightChild();
+        node.setData(successor.getData());
+        node.setRightChild(successor.getRightChild());
+        successor.getRightChild().setParent(successor);
+        node.setLeftChild(successor.getLeftChild());
+        successor.getLeftChild().setParent(successor);
+      }
+    } else {
+      if (tree.root.equals(node)) {
+        tree.root = null;
+      } else {
         if (node.getParent().getLeftChild().equals(node)) {
-          node.getParent().setLeftChild(replacement);
+          node.getParent().setLeftChild(null);
         } else {
-          node.getParent().setRightChild(replacement);
+          node.getParent().setRightChild(null);
         }
       }
-      balance(tree.root);
-      return tree;
     }
+    balance(tree.root);
+    return tree;
   }
 
   /**
@@ -289,7 +304,6 @@ public class AVLTree {
     node.setBalancingFactor(0);
     if (node.hasChildren()) {
       if (node.getLeftChild() != null) {
-        System.out.println(node.getData());
         node.setBalancingFactor(
             node.getBalancingFactor() + (Math.abs(balance(node.getLeftChild())) * -1) - 1);
       }
