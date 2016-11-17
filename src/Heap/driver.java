@@ -79,8 +79,8 @@ public class driver {
       //System.out.println(AVLTree.search(tree, 50));
       //System.out.println(AVLTree.search(tree, 15));
       //System.out.println(AVLTree.search(tree, 100));
-      AVLTree.delete(tree, 50);
-      AVLTree.delete(tree, 52);
+      AVLTree.delete(tree, 45);
+      AVLTree.delete(tree, 10);
       tree.print();
       //System.out.println(tree.count(11, 20));
       System.out.println(AVLTree.inorder(tree));

@@ -13,14 +13,13 @@ import java.util.Queue;
 public class AVLTree {
 
   public Node root;
-  public Node last;
 
   /**
    * Default constructor that creates an empty tree
    */
   public AVLTree() {
     this.root = null;
-    this.last = null;
+
   }
 
   /**
@@ -31,7 +30,7 @@ public class AVLTree {
    */
   public AVLTree(Comparable value) {
     this.root = new Node(value);
-    this.last = root;
+
   }
 
   /**
@@ -202,23 +201,6 @@ public class AVLTree {
    * @param Tree to be deleted from
    * @param Comparable value to be deleted
    * @return AVLtree new tree with node deleted
-   */
-  /*
-   * public static AVLTree delete(AVLTree tree, Comparable value) { Node node = tree.getNode(value);
-   * if (!node.hasChildren()) { if (node.getParent().getLeftChild().equals(node)) {
-   * node.getParent().setLeftChild(null); node.setParent(null); } else {
-   * node.getParent().setRightChild(null); node.setParent(null); } balance(tree.root); return tree;
-   * } else { if (node.getLeftChild() != null) { Node replacement = node.getLeftChild(); while
-   * (replacement.getRightChild() != null) { replacement = replacement.getRightChild(); }
-   * replacement.getParent().setRightChild(null); replacement.setParent(node.getParent());
-   * replacement.setLeftChild(node.getLeftChild()); if (node.getLeftChild() != null) {
-   * node.getLeftChild().setParent(replacement); } replacement.setRightChild(node.getRightChild());
-   * if (node.getRightChild() != null) { node.getRightChild().setParent(replacement); } if
-   * (node.getParent().getLeftChild().equals(node)) { node.getParent().setLeftChild(replacement); }
-   * else { node.getParent().setRightChild(replacement); } } else { Node replacement =
-   * node.getRightChild(); if (node.getParent().getLeftChild().equals(node)) {
-   * node.getParent().setLeftChild(replacement); } else {
-   * node.getParent().setRightChild(replacement); } } balance(tree.root); return tree; } }
    */
 
   public static AVLTree delete(AVLTree tree, Comparable value) {
