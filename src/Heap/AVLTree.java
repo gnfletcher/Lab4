@@ -7,13 +7,11 @@ import java.util.Queue;
 public class AVLTree {
 
 	public Node root;
-	public int numberOfNodes;
 	public Node last;
 	public int balance;
 
 	public AVLTree() {
 		this.root = null;
-		this.numberOfNodes = 0;
 		this.last = null;
 		this.balance = 0;
 
@@ -21,7 +19,6 @@ public class AVLTree {
 
 	public AVLTree(Comparable value) {
 		this.root = new Node(value);
-		this.numberOfNodes = 1;
 		this.last = root;
 		this.balance = 0;
 	}
@@ -54,11 +51,6 @@ public class AVLTree {
 			return current;
 		}
 		return null;
-	}
-
-	public boolean balance(Node node) {
-		
-		return true;
 	}
 
 	public boolean rotateLeft(Node node) {
@@ -108,7 +100,7 @@ public class AVLTree {
 			insert.setLeftChild(newNode);
 			newNode.setParent(insert);
 		}
-		balance(newNode);
+		balance();
 		return true;
 	}
 
@@ -133,7 +125,7 @@ public class AVLTree {
 			} else {
 				node.getParent().setLeftChild(null);
 			}
-			balance(node);
+			balance();
 			return true;
 		}
 		Node replacement = node.getLeftChild();
@@ -147,7 +139,7 @@ public class AVLTree {
 		} else {
 			node.getParent().setLeftChild(replacement);
 		}
-		balance(node);
+		balance();
 		return true;
 	}
 	
@@ -170,6 +162,39 @@ public class AVLTree {
 		}
 		return list;
 	}
+	
+	   
+    public boolean balance(){
+      setBalancingFactor(root);
+      return balanceTree(root);
+    }
+    
+    public boolean setBalancingFactor(Node node){
+      node.setBalancingFactor(0);
+      if(node.hasChildren()){
+        if(node.getLeftChild() != null){
+          node.setBalancingFactor(node.getBalancingFactor()-1);
+          setBalancingFactor(node.getLeftChild());
+        }
+        if(node.getRightChild() != null){
+          node.setBalancingFactor(node.getBalancingFactor()+1);
+          setBalancingFactor(node.getRightChild());
+        }
+      }
+      if(node.getBalancingFactor() > 1){
+        
+      }
+      return true;
+    }
+
+    public boolean balanceTree(Node node) {
+        if(node.hasChildren()){
+          if(node.getLeftChild() != null){
+            balanceTree(node)
+          }
+        }
+        return true;
+    }
 
 	public int count(Comparable xZero, Comparable xOne) {
 		return countFromRoot(xZero, xOne, root);
