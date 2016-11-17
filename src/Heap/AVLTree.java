@@ -222,7 +222,13 @@ public class AVLTree {
         }
         replacement.getParent().setRightChild(null);
         replacement.setLeftChild(node.getLeftChild());
+        if (replacement.getLeftChild() != null) {
+          replacement.getLeftChild().setParent(replacement);
+        }
         replacement.setRightChild(node.getRightChild());
+        if (replacement.getRightChild() != null) {
+          replacement.getRightChild().setParent(replacement);
+        }
         if (node.getParent().getLeftChild().equals(node)) {
           node.getParent().setLeftChild(replacement);
         } else {
