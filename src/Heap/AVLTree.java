@@ -20,7 +20,7 @@ public class AVLTree {
   }
 
   public static boolean search(AVLTree tree, Comparable value) {
-    Node current = tree.getRoot();
+    Node current = tree.root;
     while (current.getData().compareTo(value) != 0 && current.hasChildren()) {
       if (current.getData().compareTo(value) < 0) {
         current = current.getRightChild();
@@ -90,7 +90,7 @@ public class AVLTree {
   }
 
   public static AVLTree insert(AVLTree tree, Comparable value) {
-    Node insert = searchForOpen(tree.getRoot(), value);
+    Node insert = searchForOpen(tree.root, value);
     Node newNode = new Node(value);
     if (insert.getData().compareTo(value) <= 0) {
       insert.setRightChild(newNode);
@@ -119,27 +119,38 @@ public class AVLTree {
   public static AVLTree delete(AVLTree tree, Comparable value) {
     Node node = tree.getNode(value);
     if (!node.hasChildren()) {
-      if (node.getParent().getData().compareTo(value) <= 0) {
-        node.getParent().setRightChild(null);
-      } else {
+      if (node.getParent().getLeftChild().equals(node)) {
         node.getParent().setLeftChild(null);
+      } else {
+        node.getParent().setRightChild(null);
+      }
+      balance(tree.root);
+      return tree;
+    } else {
+      if (node.getLeftChild() != null) {
+        Node replacement = node.getLeftChild();
+        while (replacement.getRightChild() != null) {
+          replacement = node.getRightChild();
+        }
+        replacement.setLeftChild(node.getLeftChild());
+        replacement.setRightChild(node.getRightChild());
+        if (node.getParent().getLeftChild().equals(node)) {
+          node.getParent().setLeftChild(replacement);
+        } else {
+          node.getParent().setRightChild(replacement);
+        }
+      } else {
+        Node replacement = node.getRightChild();
+        if (node.getParent().getLeftChild().equals(node)) {
+          node.getParent().setLeftChild(replacement);
+        } else {
+          node.getParent().setRightChild(replacement);
+        }
       }
       balance(tree.root);
       return tree;
     }
-    Node replacement = node.getLeftChild();
-    while (replacement.getRightChild() != null) {
-      replacement = node.getRightChild();
-    }
-    replacement.setLeftChild(node.getLeftChild());
-    replacement.setRightChild(node.getRightChild());
-    if (node.getParent().getData().compareTo(node.getData()) <= 0) {
-      node.getParent().setRightChild(replacement);
-    } else {
-      node.getParent().setLeftChild(replacement);
-    }
-    balance(tree.root);
-    return tree;
+    
   }
 
   public static ArrayList<Comparable> inorder(AVLTree tree) {
@@ -248,9 +259,5 @@ public class AVLTree {
       System.out.print(value + ", ");
     }
     System.out.println("");
-  }
-
-  public Node getRoot() {
-    return root;
   }
 }
