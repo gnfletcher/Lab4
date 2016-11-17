@@ -52,8 +52,6 @@ public class AVLTree {
   public static boolean rotateLeft(Node node) {
     Node newParent = node.getRightChild();
     Node oldParent = node;
-    System.out.println(node.getData());
-    System.out.println(node.getParent().getData());
     if (node.getParent().getData().compareTo(node.getData()) <= 0) {
       node.getParent().setRightChild(newParent);
     } else {
@@ -61,6 +59,12 @@ public class AVLTree {
     }
     oldParent.setRightChild(newParent.getLeftChild());
     newParent.setLeftChild(oldParent);
+    if (newParent.getLeftChild() != null) {
+      newParent.getLeftChild().setParent(newParent);
+    }
+    if (newParent.getRightChild() != null) {
+      newParent.getRightChild().setParent(newParent);
+    }
     return true;
   }
 
@@ -74,6 +78,12 @@ public class AVLTree {
     }
     oldParent.setLeftChild(newParent.getRightChild());
     newParent.setRightChild(oldParent);
+    if (newParent.getLeftChild() != null) {
+      newParent.getLeftChild().setParent(newParent);
+    }
+    if (newParent.getRightChild() != null) {
+      newParent.getRightChild().setParent(newParent);
+    }
     return true;
   }
 
@@ -118,6 +128,9 @@ public class AVLTree {
 
   public static AVLTree delete(AVLTree tree, Comparable value) {
     Node node = tree.getNode(value);
+    System.out.println(node.getParent().getData());
+    System.out.println(node.getParent().getLeftChild().getData());
+    System.out.println(node.getParent().getRightChild().getData());
     if (!node.hasChildren()) {
       if (node.getParent().getLeftChild().equals(node)) {
         node.getParent().setLeftChild(null);
@@ -150,7 +163,7 @@ public class AVLTree {
       balance(tree.root);
       return tree;
     }
-    
+
   }
 
   public static ArrayList<Comparable> inorder(AVLTree tree) {
@@ -245,10 +258,12 @@ public class AVLTree {
     while (!queue.isEmpty()) {
       Node node = queue.remove();
       System.out.print(node.getData() + " ");
-      if (node.getLeftChild() != null)
+      if (node.getLeftChild() != null) {
         queue.add(node.getLeftChild());
-      if (node.getRightChild() != null)
+      }
+      if (node.getRightChild() != null) {
         queue.add(node.getRightChild());
+      }
     }
     System.out.println("");
   }
