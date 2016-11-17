@@ -13,13 +13,11 @@ import java.util.Queue;
 public class TrashHeap implements MyHeap {
 
 	public Node root;
-	public int height;
 	public int numberOfNodes;
 	public Node last;
 
 	public TrashHeap() {
 		this.root = null;
-		this.height = -1;
 		this.numberOfNodes = 0;
 	}
 
@@ -44,10 +42,7 @@ public class TrashHeap implements MyHeap {
 	 */
 	@Override
 	public boolean isEmpty() {
-		if (root == null) {
-			return true;
-		}
-		return false;
+		return numberOfNodes == 0;
 	}
 
 	public Node nextOpen() {
@@ -73,9 +68,7 @@ public class TrashHeap implements MyHeap {
 				current = current.getRightChild();
 			}
 		}
-		System.out.println(last.getData());
 		last = current;
-		System.out.println(last.getData());
 	}
 
 	/*
@@ -174,6 +167,11 @@ public class TrashHeap implements MyHeap {
 	 */
 	@Override
 	public boolean deleteMin() {
+		if (root == last) {
+			root = null;
+			numberOfNodes--;
+			return true;
+		}
 		root.setData(last.getData());
 		if (numberOfNodes % 2 == 0) {
 			last.getParent().setLeftChild(null);
@@ -219,14 +217,12 @@ public class TrashHeap implements MyHeap {
 		siftDown(del);
 		return true;
 	}
-	
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see Heap.MyHeap#union(Heap.MyHeap)
 	 */
-	@Override
 	public boolean union(MyHeap heap) {
 		// TODO Auto-generated method stub
 		while (!heap.isEmpty()) {
@@ -267,11 +263,4 @@ public class TrashHeap implements MyHeap {
 		System.out.println("");
 	}
 
-	public void inOrderPrint(Node node) {
-		if (node != null) {
-			System.out.print(node.getData() + ", ");
-			inOrderPrint(node.getLeftChild());
-			inOrderPrint(node.getRightChild());
-		}
-	}
 }

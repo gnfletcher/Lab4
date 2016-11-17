@@ -17,10 +17,10 @@ public class AVLTree {
 
 	}
 
-	public AVLTree(Node node) {
-		this.root = node;
+	public AVLTree(Comparable value) {
+		this.root = new Node(value);
 		this.numberOfNodes = 1;
-		this.last = node;
+		this.last = root;
 		this.balance = 0;
 	}
 
@@ -81,14 +81,15 @@ public class AVLTree {
 		rotateRight(node);
 		return true;
 	}
-	public boolean insert(Node node) {
-		Node insert = searchForOpen(root, node.getData());
-		if (insert.getData().compareTo(node.getData()) <= 0) {
-			insert.setRightChild(node);
+	public boolean insert(Comparable value) {
+		Node insert = searchForOpen(root, value);
+		Node newNode = new Node(value);
+		if (insert.getData().compareTo(value) <= 0) {
+			insert.setRightChild(newNode);
 		} else {
-			insert.setLeftChild(node);
+			insert.setLeftChild(newNode);
 		}
-		balance(Node node);
+		balance(newNode);
 		return true;
 	}
 
@@ -117,19 +118,23 @@ public class AVLTree {
 		} else {
 			node.getParent().setLeftChild(replacement);
 		}
-		balance(Node node);
+		balance(node);
 		return true;
 	}
+	
+	public static ArrayList<Comparable> inorder(AVLTree tree, Node node) {
+		return tree.inorderTraversal(node);
+	}
 
-	public ArrayList<Comparable> inorder(Node node) {
+	public ArrayList<Comparable> inorderTraversal(Node node) {
 		ArrayList<Comparable> list = new ArrayList<>();
 		if (node.hasChildren()) {
 			if (node.getLeftChild() != null) {
-				list.addAll(inorder(node.getLeftChild()));
+				list.addAll(inorderTraversal(node.getLeftChild()));
 			}
 			list.add(node.getData());
 			if (node.getRightChild() != null) {
-				list.addAll(inorder(node.getRightChild()));
+				list.addAll(inorderTraversal( node.getRightChild()));
 			}
 		} else {
 			list.add(node.getData());
