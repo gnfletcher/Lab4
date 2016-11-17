@@ -164,27 +164,25 @@ public class AVLTree {
     node.setBalancingFactor(0);
     if (node.hasChildren()) {
       if (node.getLeftChild() != null) {
-        node.setBalancingFactor(node.getBalancingFactor()
-            + (Math.abs(balance(node.getLeftChild())) * -1) - 1);
-        if (node.getBalancingFactor() < -1) {
-          if(node.getLeftChild().getBalancingFactor() == -1){
-            rotateRight(node);
-          } else {
-            rotateRightLeft(node);
-          }
-        }
+        node.setBalancingFactor(
+            node.getBalancingFactor() + (Math.abs(balance(node.getLeftChild())) * -1) - 1);
       }
       if (node.getRightChild() != null) {
         node.setBalancingFactor(
             node.getBalancingFactor() + (Math.abs(balance(node.getRightChild()))) + 1);
-        if (node.getBalancingFactor() > 1) {
-          if(node.getLeftChild().getBalancingFactor() == 1){
-            rotateLeft(node);
-          } else {
-            rotateLeftRight(node);
-          }
-        }
       }
+      if (node.getBalancingFactor() == -2) {
+        if (node.getLeftChild().getBalancingFactor() == -1) {
+          rotateRight(node);
+        } else {
+          rotateRightLeft(node);
+        }
+      } else if (node.getBalancingFactor() == 2)
+        if (node.getLeftChild().getBalancingFactor() == 1) {
+          rotateLeft(node);
+        } else {
+          rotateLeftRight(node);
+        }
     }
     return node.getBalancingFactor();
   }
@@ -247,7 +245,7 @@ public class AVLTree {
     System.out.println("");
   }
 
-  public Node getRoot(){
+  public Node getRoot() {
     return root;
   }
 }
